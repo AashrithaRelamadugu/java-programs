@@ -1,0 +1,64 @@
+import java.util.*;
+
+class Electric {
+    String ConsumerNo;
+    String ConsumerName;
+    double currentReading;
+    double previousReading;
+    double billAmount = 0;
+    String connectionType;
+
+    // Constructor to initialize values
+    Electric() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter Consumer Number: ");
+        ConsumerNo = sc.nextLine();
+        System.out.print("Enter Consumer Name: ");
+        ConsumerName = sc.nextLine();
+        System.out.print("Enter Current Reading: ");
+        currentReading = sc.nextDouble();
+        System.out.print("Enter Previous Reading: ");
+        previousReading = sc.nextDouble();
+        sc.nextLine(); // Consume the newline left after reading double
+        System.out.print("Enter Connection Type (domestic/commercial): ");
+        connectionType = sc.nextLine();
+    }
+
+    // Display details
+    void display() {
+        System.out.println("\nConsumer Number: " + ConsumerNo);
+        System.out.println("Consumer Name: " + ConsumerName);
+        System.out.println("Current Reading: " + currentReading);
+        System.out.println("Previous Reading: " + previousReading);
+        System.out.println("Connection Type: " + connectionType);
+    }
+
+    // Calculate and display bill
+    void calculateBill() {
+        double domesticRate = 5.0;
+        double commercialRate = 8.0;
+        double units = currentReading - previousReading;
+
+        if (units < 0) {
+            System.out.println("Invalid readings. Current reading cannot be less than previous reading.");
+            return;
+        }
+
+        if (connectionType.equalsIgnoreCase("domestic")) {
+            billAmount = units * domesticRate;
+        } else if (connectionType.equalsIgnoreCase("commercial")) {
+            billAmount = units * commercialRate;
+        } else {
+            System.out.println("Invalid connection type.");
+            return;
+        }
+
+        System.out.println("Total Bill: " + billAmount);
+    }
+
+    public static void main(String[] args) {
+        Electric e = new Electric();
+        e.display();
+        e.calculateBill();
+    }
+}
